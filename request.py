@@ -91,6 +91,8 @@ def get_user_input():
 try:
     file_template, directory_frame, directory_output, project_id, jwt = get_user_input()
 
+    print(f"\n\n{file_template}\n{directory_frame}\n{directory_output}\n{project_id}\n{jwt}\n\n\n")
+
     directory_frame = Path("/home/singern/Desktop/illegal_shit/frames")
     if not directory_frame.is_dir():
         print("You suck, give me a real folder... or check permissions??")
