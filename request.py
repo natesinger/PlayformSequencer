@@ -6,6 +6,7 @@ from pathlib import Path
 import platform
 from progress.bar import Bar
 import requests
+import time
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename, askdirectory
 import urllib
@@ -73,11 +74,15 @@ def get_user_input():
     print("Create a project, save the template file on your local machine...")
     input("Hit [enter] to proceed with selecting it...")
     file_template = askopenfilename() # show an "Open" dialog box and return the path to the selected file
+    time.sleep(1)
     input("Hit [enter] to proceed with selecting a directory of frames...")
     directory_frame = askdirectory()
+    time.sleep(1)
     input("Hit [enter] to proceed with selecting an output directory...")
     directory_output = askdirectory()
+    time.sleep(1)
     project_id = input("Please provde a project ID from the URL of the project page, as an integer: ")
+    time.sleep(1)
     jwt = input("Please provide the authorization header(JWT) like \"JWT eyJh...\": ")
 
     return file_template, directory_frame, directory_output, project_id, jwt
