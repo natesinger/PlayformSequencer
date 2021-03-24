@@ -68,11 +68,21 @@ class FuckPic:
             exit()
 
 def get_user_input():
+    #https://stackoverflow.com/questions/3579568/choosing-a-file-in-python-with-simple-dialog
+    Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
+
     print("Create a project, save the template file on your local machine...")
-    file_template = input("Specify the file template: ")
-    directory_frame = input("Specify a directory of frames: ")
-    directory_output = input("Specify an output directory: ")
+    input("Hit [enter] to proceed with selecting it...")
+    file_template = askopenfilename() # show an "Open" dialog box and return the path to the selected file
+    time.sleep(1)
+    input("Hit [enter] to proceed with selecting a directory of frames...")
+    directory_frame = askdirectory()
+    time.sleep(1)
+    input("Hit [enter] to proceed with selecting an output directory...")
+    directory_output = askdirectory()
+    time.sleep(1)
     project_id = input("Please provde a project ID from the URL of the project page, as an integer: ")
+    time.sleep(1)
     jwt = input("Please provide the authorization header(JWT) like \"JWT eyJh...\": ")
 
     return file_template, directory_frame, directory_output, project_id, jwt
@@ -80,9 +90,6 @@ def get_user_input():
 #INIT
 try:
     file_template, directory_frame, directory_output, project_id, jwt = get_user_input()
-
-    print(f"\n\n{file_template}\n{directory_frame}\n{directory_output}\n{project_id}\n{jwt}\n\n\n")
-    exit()
 
     directory_frame = Path("/home/singern/Desktop/illegal_shit/frames")
     if not directory_frame.is_dir():
