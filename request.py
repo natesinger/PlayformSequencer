@@ -89,9 +89,9 @@ def get_user_input():
 
 #INIT
 try:
-    file_template, directory_frame, directory_output, project_id, jwt = get_user_input()
+    file_template, directory_frame, save_dir, project_id, jwt = get_user_input()
 
-    directory_frame = Path("/home/singern/Desktop/illegal_shit/frames")
+    directory_frame = Path(directory_frame)
     if not directory_frame.is_dir():
         print("You suck, give me a real folder... or check permissions??")
         exit()
@@ -104,15 +104,7 @@ try:
     else: #its linux or macos
         files_input = [f"{directory_frame.resolve()}/{f}" for f in files]
 
-    save_dir = os.path.dirname(os.path.abspath(__file__)) + ""
-    if platform.system() == "Windows":
-        save_dir += "\\tool_output"
-        files_output = [f"{save_dir}\{f}" for f in files]
-    else: #its linux or macos
-        save_dir += "/tool_output"
-        files_output = [f"{save_dir}/{f}" for f in files]
-
-    if not Path(save_dir).is_dir(): os.mkdir(save_dir)
+    files_output = [f"{save_dir}\{f}" for f in files]
 
     total_file_count = len(files_input)
 
