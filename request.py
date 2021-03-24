@@ -14,12 +14,13 @@ import warnings
 warnings.filterwarnings("ignore")
 
 class FuckPic:
-    def __init__(self, user_image:str, project_id:str, user_jwt:str, proxy:bool=False):
+    def __init__(self, user_image:str, file_template:str, project_id:str, user_jwt:str, proxy:bool=False):
         """"""
         self.image_user_abspath = user_image
         self.project_id = project_id
         self.jwt = user_jwt
         self.proxy_state = proxy
+        self.file_template = file_template
 
         self.image_sketch = None
         self.image_generate = None
@@ -52,7 +53,7 @@ class FuckPic:
     def generate_image(self):
         """"""
         try:
-            file = {'input': open('.tmpfile.png','rb'), 'custom_style': open('/home/singern/Desktop/0109.png','rb')}
+            file = {'input': open('.tmpfile.png','rb'), 'custom_style': open(self.file_template,'rb')}
             form_data = {'custom_style': '', 'style':3, 'genre':1}
 
             if self.proxy_state:
@@ -107,7 +108,7 @@ try:
     with Bar("Processing frames") as bar:
         bar.max = total_file_count
         for i,f in enumerate(files_input):
-            new_picture = FuckPic(f, project_id, jwt)
+            new_picture = FuckPic(f, file_template, project_id, jwt)
             with open(files_output[i], 'wb') as io:
                 io.write(new_picture.image_generate)
             bar.next()
