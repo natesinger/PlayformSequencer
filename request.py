@@ -14,7 +14,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 class FuckPic:
-    def __init__(self, user_image:str, project_id:str, user_jwt:str, proxy:bool):
+    def __init__(self, user_image:str, project_id:str, user_jwt:str, proxy:bool=False):
         """"""
         self.image_user_abspath = user_image
         self.project_id = project_id
