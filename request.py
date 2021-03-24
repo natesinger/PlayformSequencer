@@ -111,7 +111,7 @@ try:
     with Bar("Processing frames") as bar:
         bar.max = total_file_count
         for i,f in enumerate(files_input):
-            new_picture = FuckPic(f, project_id, jwt, True)
+            new_picture = FuckPic(f, project_id, jwt)
             with open(files_output[i], 'wb') as io:
                 io.write(new_picture.image_generate)
             bar.next()
