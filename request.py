@@ -99,11 +99,7 @@ try:
     files = [f for f in os.listdir(directory_frame)]
     files.sort()
 
-    if platform.system() == "Windows":
-        files_input = [f"{directory_frame.resolve()}\{f}" for f in files]
-    else: #its linux or macos
-        files_input = [f"{directory_frame.resolve()}/{f}" for f in files]
-
+    files_input = [f"{directory_frame.resolve()}/{f}" for f in files]
     files_output = [f"{save_dir}\{f}" for f in files]
 
     total_file_count = len(files_input)
