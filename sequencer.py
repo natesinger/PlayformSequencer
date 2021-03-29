@@ -34,7 +34,7 @@ try:
         print("You suck, give me a real folder... or check permissions??")
         exit()
 
-    files = [f for f in os.listdir(directory_frames)]
+    files = [f for f in os.listdir(directory_frames) if not directory_frames == ".DS_STORE"] #fix for dum apple
     files.sort()
 
     files_input = [f"{directory_frames.resolve()}/{f}" for f in files]
