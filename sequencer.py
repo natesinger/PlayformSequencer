@@ -46,8 +46,12 @@ try:
         bar.max = total_file_count
         for i,f in enumerate(files_input):
             new_picture = FuckPic(f, file_template, project_id, user_jwt)
-            with open(files_output[i], 'wb') as io:
+
+            extension_index = files_output[i].find('.')
+            updated_file_name = files_output[i][:extension_index] + '.jpg'
+            with open(updated_file_name, 'wb') as io:
                 io.write(new_picture.image_generate)
+
             bar.next()
 
 except KeyboardInterrupt:
