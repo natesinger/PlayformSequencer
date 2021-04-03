@@ -79,8 +79,9 @@ try:
 
         # Build a worker for every provided project id and initiate
         workers = [FuckPicWorker(pid, queue) for pid in project_id_list]
-        for worker in workers: worker.daemon = True
-        for worker in workers: worker.start()
+        for worker in workers:
+            worker.daemon = True
+            worker.start()
 
         #update the bar while the threads work
         while bar.index <= bar.max:
