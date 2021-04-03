@@ -44,6 +44,8 @@ try:
 
     with Bar("Processing frames") as bar:
         bar.max = total_file_count
+
+
         for i,f in enumerate(files_input):
             new_picture = FuckPic(f, file_template, project_id, user_jwt)
 
