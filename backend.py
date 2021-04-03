@@ -40,15 +40,15 @@ class FuckPic:
 
             #parse the sketch image url from the response and save it to the image_sketch class variable
             image_sketch_url = (json.loads(r.content))["sketch"]["file"]
-            self.image_sketch = requests.get(image_sketch_url).content
-            with open('.tmpfile.png', 'wb') as io: io.write(self.image_sketch)
+            self.image_sketch = io.BytesIO(requests.get(image_sketch_url).content)
+            self.image_sketch.name = 'sketch.jpg'
         except KeyError:
             print(f"\nInvalid server response:{r.content}")
             exit()
     def generate_image(self):
         """"""
         try:
-            file = {'input': open('.tmpfile.png','rb'), 'custom_style': open(self.file_template,'rb')}
+            file = {'input': self.image_sketch, 'custom_style': open(self.file_template,'rb')}
             form_data = {'custom_style': '', 'style':3, 'genre':1}
 
             if self.proxy_state:

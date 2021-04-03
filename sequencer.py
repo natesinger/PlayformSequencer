@@ -6,37 +6,6 @@ from progress.bar import Bar
 import os
 import argparse
 
-
-import threading,time
-
-from threading import Thread;
-from threading import Event;
-import time;
-
-def test():
-    for i in range(20):
-        print(f'test {i}')
-
-t1 = threading.Thread(target=test, args=())
-t1.start()
-t1.join()
-
-print('done')
-
-threads = [ChildThread() for i in range(3)]
-
-for thread in threads:
-    thread.start()
-    thread.join()
-
-while True:
-    for thread in threads:
-        print(thread.is_alive())
-    print(time())
-
-exit()
-
-
 '''usage: sequencer.py [-h] [-o] [-oa]
 
 Playform image sequencer.
@@ -60,11 +29,6 @@ try:
 
     file_template, directory_frames, save_dir, project_id, user_jwt = read_config()
 
-
-
-
-    exit()
-
     directory_frames = Path(directory_frames)
     if not directory_frames.is_dir():
         print("You suck, give me a real folder... or check permissions??")
@@ -85,7 +49,7 @@ try:
         for i,f in enumerate(files_input):
 
             #new_picture = FuckPic(f, file_template, project_id, user_jwt)
-            new_picture = FuckPic(f, file_template, project_id, user_jwt)
+            new_picture = FuckPic(f, file_template, project_id, user_jwt, True)
 
             with open(files_output[i], 'wb') as io:
                 io.write(new_picture.image_generate)
