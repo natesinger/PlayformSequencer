@@ -64,7 +64,7 @@ try:
     files.sort()
 
     files_input = [f"{directory_frames.resolve()}/{f}" for f in files]
-    files_output = [f"{save_dir}/{f}" for f in files]
+    files_output = [f"{save_dir}/{f.replace('png','jpg')}" for f in files]
     total_file_count = len(files_input)
 
     files_to_queue = [(files_input[i], files_output[i], file_template, user_jwt, PROXY_ON) for i in range(total_file_count)]
