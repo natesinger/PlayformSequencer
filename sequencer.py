@@ -9,7 +9,7 @@ import time
 import os
 import argparse
 
-PROXY_ON = True
+PROXY_ON = False
 
 class FuckPicWorker(Thread):
     def __init__(self, project_id:str, queue:object):
@@ -79,6 +79,7 @@ try:
 
         # Build a worker for every provided project id and initiate
         workers = [FuckPicWorker(pid, queue) for pid in project_id_list]
+        for worker in workers: worker.daemon = True
         for worker in workers: worker.start()
 
         #update the bar while the threads work
@@ -91,6 +92,5 @@ try:
             bar.update()
             time.sleep(0.1)
 
-except KeyboardInterrupt:
-    print('[!] Aborted by request...')
-    exit()
+except (KeyboardInterrupt, SystemExit):
+    print('[!] Aborted by request... killing children')
