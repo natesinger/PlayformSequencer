@@ -12,7 +12,7 @@ def write_config(file_template:str, directory_frames:str, directory_output:str, 
     users = [{'file_template': file_template},
      {'directory_frames': directory_frames},
       {'directory_output': directory_output},
-       {'project_id': project_id},
+       {'project_id_list': project_id_list},
         {'authorization': authorization}]
 
     with open(CONFIG_FILE, 'w') as f:
@@ -22,7 +22,7 @@ def read_config(CONFIG_FILE:str="config.yml") -> list:
     with open(CONFIG_FILE) as f:
         for config_file in yaml.load_all(f, Loader=yaml.FullLoader):
             return(config_file[0]["file_template"], config_file[1]["directory_frames"],
-            config_file[2]["directory_output"], config_file[3]["project_id"],
+            config_file[2]["directory_output"], config_file[3]["project_id_list"],
             config_file[4]["authorization"])
 
 def get_user_input():
@@ -38,8 +38,8 @@ def get_user_input():
     input("Hit [enter] to proceed with selecting an output directory...")
     directory_output = askdirectory()
     time.sleep(1)
-    project_id = input("Please provde a project ID from the URL of the project page, as an integer: ")
+    project_ids = input("Please provde comma delimited project IDs, as an integer (ie: \'12345, 23456, 34567\'): ")
     time.sleep(1)
     jwt = input("Please provide the authorization header(JWT) like \"JWT eyJh...\": ")
 
-    return file_template, directory_frames, directory_output, project_id, jwt
+    return file_template, directory_frames, directory_output, project_ids, jwt
