@@ -8,12 +8,13 @@ def set_config():
     print("Create a project, save the template file on your local machine...")
     write_config(*get_user_input())
 
-def write_config(file_template:str, directory_frames:str, directory_output:str, project_id:str, authorization:str, CONFIG_FILE:str="config.yml"):
+def write_config(file_template:str, directory_frames:str, directory_output:str, project_id:str, authorization:str, genre:str, CONFIG_FILE:str="config.yml"):
     users = [{'file_template': file_template},
      {'directory_frames': directory_frames},
       {'directory_output': directory_output},
        {'project_id_list': project_id_list},
-        {'authorization': authorization}]
+        {'genre': genre},
+         {'authorization': authorization}]
 
     with open(CONFIG_FILE, 'w') as f:
         data = yaml.dump(users, f)
@@ -23,7 +24,7 @@ def read_config(CONFIG_FILE:str="config.yml") -> list:
         for config_file in yaml.load_all(f, Loader=yaml.FullLoader):
             return(config_file[0]["file_template"], config_file[1]["directory_frames"],
             config_file[2]["directory_output"], config_file[3]["project_id_list"],
-            config_file[4]["authorization"])
+            config_file[4]["authorization"],config_file[5]["genre"])
 
 def get_user_input():
     #https://stackoverflow.com/questions/3579568/choosing-a-file-in-python-with-simple-dialog
@@ -41,5 +42,7 @@ def get_user_input():
     project_ids = input("Please provde comma delimited project IDs, as an integer (ie: \'12345, 23456, 34567\'): ")
     time.sleep(1)
     jwt = input("Please provide the authorization header(JWT) like \"JWT eyJh...\": ")
+    time.sleep(1)
+    genre = input("Please provide a genre [1-3]: ")
 
-    return file_template, directory_frames, directory_output, project_ids, jwt
+    return file_template, directory_frames, directory_output, project_ids, jwt, genre

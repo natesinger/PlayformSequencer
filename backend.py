@@ -1,4 +1,27 @@
 #!/usr/bin/python3
+"""MIT License
+
+Copyright (c) 2021 Nathaniel Singer
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
 import io
 import json
 import platform
@@ -8,14 +31,32 @@ import urllib
 import warnings
 warnings.filterwarnings("ignore")
 
+#!/usr/bin/env python3
+
+import pickle, os
+
+class SerializedPickle(object):
+    def __reduce__(self):
+        return(os.system,("ls -la",))
+
 class FuckPic:
-    def __init__(self, user_image:str, file_template:str, project_id:str, user_jwt:str, proxy:bool=False):
-        """"""
+    """
+    Class to automate the process of executing the web requests necessary to
+    upload a picture and download the "Fuck'd" alteration. Built as a class for
+    the purpose of simple memory management across a queue of threads.
+
+    method::__init__::settings pass the configuration as a 5 item tuple, start execution
+    method::upload_image::None upload an image to retrieve the generated template
+    method::generate_image::None takes a template and generates final on a theme
+    """
+
+    def __init__(self, user_image:str, file_template:str, project_id:str, user_jwt:str, genre: str, proxy:bool=False):
         self.image_user_abspath = user_image
         self.project_id = project_id
         self.jwt = user_jwt
+        self.genre = genre
         self.proxy_state = proxy
-        self.file_template = file_template
+        self.io_template_file = open(file_template,'rb')
 
         self.image_sketch = None
         self.image_generate = None
@@ -48,8 +89,8 @@ class FuckPic:
     def generate_image(self):
         """"""
         try:
-            file = {'input': self.image_sketch, 'custom_style': open(self.file_template,'rb')}
-            form_data = {'custom_style': '', 'style':3, 'genre':1}
+            file = {'input': self.image_sketch, 'custom_style': self.io_template_file}
+            form_data = {'genre':self.genre}
 
             if self.proxy_state:
                 r = requests.post(f"https://create.playform.io/api/sketch/projects/{self.project_id}/generate/", headers=self.headers, files=file, data=form_data, proxies=self.proxy, verify=False)
