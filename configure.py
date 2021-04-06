@@ -13,8 +13,8 @@ def write_config(file_template:str, directory_frames:str, directory_output:str, 
      {'directory_frames': directory_frames},
       {'directory_output': directory_output},
        {'project_id_list': project_id_list},
-        {'genre': genre},
-         {'authorization': authorization}]
+        {'authorization': authorization},
+         {'genre': genre}]
 
     with open(CONFIG_FILE, 'w') as f:
         data = yaml.dump(users, f)
