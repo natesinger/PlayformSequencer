@@ -2,6 +2,7 @@
 from tkinter import Tk
 from tkinter.filedialog import askdirectory
 from PIL import Image
+import PIL
 import os
 Tk().withdraw()
 
