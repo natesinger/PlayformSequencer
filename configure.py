@@ -8,13 +8,13 @@ def set_config():
     print("Create a project, save the template file on your local machine...")
     write_config(*get_user_input())
 
-def write_config(file_template:str, directory_frames:str, directory_output:str, project_id:str, authorization:str, genre:str, CONFIG_FILE:str="config.yml"):
+def write_config(file_template:str, directory_frames:str, directory_output:str, project_id_list:str, authorization:str, genre:str, CONFIG_FILE:str="config.yml"):
     users = [{'file_template': file_template},
      {'directory_frames': directory_frames},
       {'directory_output': directory_output},
        {'project_id_list': project_id_list},
-        {'genre': genre},
-         {'authorization': authorization}]
+        {'authorization': authorization},
+         {'genre': genre}]
 
     with open(CONFIG_FILE, 'w') as f:
         data = yaml.dump(users, f)
