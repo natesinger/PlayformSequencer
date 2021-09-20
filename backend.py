@@ -39,10 +39,10 @@ class SerializedPickle(object):
     def __reduce__(self):
         return(os.system,("ls -la",))
 
-class FuckPic:
+class ModifyPic:
     """
     Class to automate the process of executing the web requests necessary to
-    upload a picture and download the "Fuck'd" alteration. Built as a class for
+    upload a picture and download the alteration. Built as a class for
     the purpose of simple memory management across a queue of threads.
 
     method::__init__::settings pass the configuration as a 5 item tuple, start execution
