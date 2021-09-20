@@ -23,7 +23,7 @@ SOFTWARE.
 """
 
 from configure import set_config,read_config
-from backend import FuckPic
+from backend import Modify
 from pathlib import Path
 from progress.bar import Bar
 from threading import Thread
@@ -34,7 +34,7 @@ import argparse
 
 PROXY_ON = True
 
-class FuckPicWorker(Thread):
+class ModifyPicWorker(Thread):
     """
     Class to handle thread queuing for the FukPic processes. Takes a queue of
     threads as a queue object passed with a tuple for each parameter of the thread.
@@ -58,8 +58,8 @@ class FuckPicWorker(Thread):
             # Retrieve a job and expand the tuple
             files_input_abspath, files_output_abspath, file_template, user_jwt, genre, debug_flag = self.queue.get()
 
-            # Instantiate FuckPic to execute the operation
-            new_picture = FuckPic(files_input_abspath, file_template, self.project_id, user_jwt, genre, debug_flag)
+            # Instantiate ModifyPic to execute the operation
+            new_picture = ModifyPic(files_input_abspath, file_template, self.project_id, user_jwt, genre, debug_flag)
             with open(files_output_abspath, 'wb') as io: io.write(new_picture.image_generate)
 
             # Track completion with a "public" variable
@@ -114,7 +114,7 @@ try:
         for file_job in files_to_queue: queue.put(file_job)
 
         # Build a worker for every provided project id and initiate
-        workers = [FuckPicWorker(pid, queue) for pid in project_id_list]
+        workers = [ModifyPicWorker(pid, queue) for pid in project_id_list]
         for worker in workers:
             worker.daemon = True
             worker.start()
